@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Main { //Testing customer methods
+public class Main {
     public static void main(String[] args) {
         //Customer information
         Customer test = new Customer("Test", 88888, 100.00, 300.00);

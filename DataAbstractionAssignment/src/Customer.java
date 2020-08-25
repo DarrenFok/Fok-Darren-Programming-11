@@ -107,4 +107,20 @@ public class Customer {
         Date dateobj = new Date();
         return dateobj;
     }
+    //getters and setters
+    public ArrayList<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(ArrayList<Deposit> deposits) {
+        this.deposits = deposits;
+    }
+
+    public ArrayList<Withdraw> getWithdraws() {
+        return withdraws;
+    }
+
+    public void setWithdraws(ArrayList<Withdraw> withdraws) {
+        this.withdraws = withdraws;
+    }
 }
