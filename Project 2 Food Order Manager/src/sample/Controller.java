@@ -3,6 +3,7 @@ package sample;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import java.util.List;
 
 public class Controller {
     //Order Management Fields
@@ -11,7 +12,7 @@ public class Controller {
     public Button shipOrder;
 
     //View Your Order Fields
-    public ListView viewList;
+    public ListView<Item> viewList;
 
     //Create Your Order Tab Fields
     public ListView<Item> createOrderList = new ListView<>();
@@ -27,13 +28,18 @@ public class Controller {
     //Order Management Tab Methods
     public void viewOrder(MouseEvent mouseEvent) {
         //Clear viewList
-        viewList.getItems().clear();
-        
+        viewList.getSelectionModel().getSelectedItems().clear();
+
+        //Transfer selected Order's list's items to viewList
+        List<Item> tempList = overallList.getSelectionModel().getSelectedItem().getItems();
+        for(int i = 0; i < tempList.size(); i++){
+            viewList.getItems().add(tempList.get(i));
+        }
+
     }
 
     public void shipOrder(MouseEvent mouseEvent) {
-        Order remove;
-        remove = (Order) overallList.getSelectionModel().getSelectedItem();
+        Order remove = overallList.getSelectionModel().getSelectedItem();
         overallList.getItems().remove(remove);
     }
 
@@ -64,7 +70,7 @@ public class Controller {
 
     public void removeItem(MouseEvent mouseEvent) {
         Item remove;
-        remove = createOrderList.getSelectionModel().getSelectedItem();
+        remove = (Item) createOrderList.getSelectionModel().getSelectedItem();
         createOrderList.getItems().remove(remove);
     }
 
@@ -73,18 +79,26 @@ public class Controller {
     }
 
     public void confirmOrder(MouseEvent mouseEvent) {
-        //Name order and //Transfer all items within listView to object order
+        //Name order and transfer all items within listView into an Order
         String name = nameOrder.getText();
-        ObservableList<Item> tempList = createOrderList.getItems();
-        Order order = new Order(name, tempList);
+        if(createOrderList.getItems().isEmpty())
+            System.out.println("ERROR, ORDER LIST IS EMPTY");
+        else{
+            //Add items from the createOrderList into the new list
+            List<Item> tempList = createOrderList.getItems();
 
-        //Add the order to the overall list of orders
-        overallList.getItems().add(order);
+            //Create new object Order and take the new list and put it in in the new Order
+            Order tempOrder = new Order(name, tempList);
 
-        //Clear everything within the temporary createOrderList
-        createOrderList.getItems().clear();
+            //Add the order to the overall list of orders
+            overallList.getItems().add(tempOrder);
 
-        //Clear everything within the text field
-        nameOrder.clear();
+            //Clear everything within the temporary createOrderList
+            createOrderList.getItems().clear();
+
+            //Clear everything within the text field
+            nameOrder.clear();
+        }
+
     }
 }

@@ -3,13 +3,18 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Order {
+import java.util.List;
+
+public class Order{
     //Fields
     private String name;
-    private ObservableList<Item> items = FXCollections.observableArrayList();
+    private List<Item> items;
 
     //Constructor
-    public Order(String name, ObservableList<Item> items){
+    public Order(){
+    }
+
+    public Order(String name, List<Item> items){
         this.name = name;
         this.items = items;
     }
@@ -24,11 +29,11 @@ public class Order {
     }
 
     //Observable List getter and setter
-    public ObservableList<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(ObservableList<Item> tempList) {
+    public void setItems(List<Item> tempList) {
         this.items = tempList;
     }
 
