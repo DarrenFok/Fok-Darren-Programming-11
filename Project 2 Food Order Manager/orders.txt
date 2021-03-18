@@ -1,1 +1,4 @@
-Darren's Order,[Chicken Sandwich];Darren's Order,[Chicken Sandwich];Darren's Order,[Cheeseburger, Cheeseburger];
+Darren Fok,Chicken Sandwich 
+Fries 
+Soft Drink 
+;

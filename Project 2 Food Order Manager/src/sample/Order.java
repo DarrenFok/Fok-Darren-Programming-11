@@ -3,18 +3,17 @@ package sample;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 public class Order{
     //Fields
     private String name;
-    private List<Item> items;
+    private String items;
 
     //Constructor
     public Order(){
     }
 
-    public Order(String name, List<Item> items){
+    public Order(String name, String items){
         this.name = name;
         this.items = items;
     }
@@ -29,11 +28,11 @@ public class Order{
     }
 
     //Observable List getter and setter
-    public List<Item> getItems() {
+    public String getItems() {
         return items;
     }
 
-    public void setItems(List<Item> tempList) {
+    public void setItems(String tempList) {
         this.items = tempList;
     }
 
