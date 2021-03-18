@@ -1,8 +1,13 @@
 package sample;
 
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -10,9 +15,12 @@ public class Controller {
     public ListView<Order> overallList;
     public Button viewOrder;
     public Button shipOrder;
+    public Button saveButton;
+    public Button loadButton;
 
     //View Your Order Fields
-    public ListView<Item> viewList;
+    public Label selectedOrder;
+    public Label viewSelectedOrder;
 
     //Create Your Order Tab Fields
     public ListView<Item> createOrderList = new ListView<>();
@@ -27,15 +35,16 @@ public class Controller {
 
     //Order Management Tab Methods
     public void viewOrder(MouseEvent mouseEvent) {
-        //Clear viewList
-        viewList.getSelectionModel().getSelectedItems().clear();
 
-        //Transfer selected Order's list's items to viewList
-        List<Item> tempList = overallList.getSelectionModel().getSelectedItem().getItems();
-        for(int i = 0; i < tempList.size(); i++){
-            viewList.getItems().add(tempList.get(i));
+        //Set name of selected order
+        selectedOrder.setText(overallList.getSelectionModel().getSelectedItem().getName());
+
+        //Display ordered items by setting text
+        String order = "";
+        for(int i = 0; i < overallList.getSelectionModel().getSelectedItem().getItems().size(); i++){
+            order += overallList.getSelectionModel().getSelectedItem().getItems().get(i) + "\n";
         }
-
+        viewSelectedOrder.setText(order);
     }
 
     public void shipOrder(MouseEvent mouseEvent) {
@@ -85,7 +94,9 @@ public class Controller {
             System.out.println("ERROR, ORDER LIST IS EMPTY");
         else{
             //Add items from the createOrderList into the new list
-            List<Item> tempList = createOrderList.getItems();
+            List<Item> tempList = new ArrayList<Item>();
+            for(int i = 0; i < createOrderList.getItems().size(); i++)
+                tempList.add(createOrderList.getItems().get(i));
 
             //Create new object Order and take the new list and put it in in the new Order
             Order tempOrder = new Order(name, tempList);
@@ -100,5 +111,22 @@ public class Controller {
             nameOrder.clear();
         }
 
+    }
+    //Writing to file methods
+    public void saveToFile(MouseEvent mouseEvent) throws IOException {
+        ObservableList<Order> myList = overallList.getItems();
+        for(Order o : myList){
+            o.writeToFile();
+        }
+        overallList.getItems().clear();
+    }
+
+
+    public void loadFile(MouseEvent mouseEvent) throws IOException {
+        overallList.getItems().clear();
+        ArrayList<Order> orders = CreateOrder.createAllOrders("orders.txt");
+        for(Order o : orders){
+            overallList.getItems().add(o);
+        }
     }
 }

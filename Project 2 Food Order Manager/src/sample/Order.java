@@ -1,8 +1,8 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class Order{
@@ -39,4 +39,14 @@ public class Order{
 
     //To String Method
     public String toString() {return name;}
+
+    //Write to file
+    public void writeToFile() throws IOException{
+        FileWriter fw = new FileWriter("orders.txt", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(name + ",\r");
+        bw.write(items.toString() + "\r");
+        bw.write(";\r");
+        bw.close();
+    }
 }

@@ -5,6 +5,8 @@ public class Item {
     private String name;
 
     //Constructor
+    Item(){}
+
     Item(String name){
         this.name = name;
     }
